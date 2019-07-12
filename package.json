@@ -1,0 +1,24 @@
+{
+  "name": "wx-public",
+  "version": "1.0.0",
+  "description": "wx-public-test",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "keywords": [
+    "wx"
+  ],
+  "author": "EditYJ",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.5",
+    "fs": "0.0.1-security",
+    "koa": "^1.2.5",
+    "path": "^0.12.7",
+    "raw-body": "^2.4.1",
+    "request": "^2.88.0",
+    "sha1": "^1.1.1",
+    "xml2js": "^0.4.19"
+  }
+}
