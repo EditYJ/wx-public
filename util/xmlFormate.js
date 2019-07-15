@@ -7,6 +7,7 @@
 
 var xml2js = require('xml2js');
 var Promise = require('bluebird');
+var template = require('../views/template');
 
 exports.parseXMLAsync = function(xml){
 	return new Promise(function(resolve,reject){
@@ -38,3 +39,22 @@ function formatMessage(result){
 }
 
 exports.formatMessage = formatMessage;
+
+// 传入参数给返回消息模板
+exports.tpl = function(content,message){
+	var info = {};
+	var type = 'text';
+	var fromUserName = message.FromUserName;
+	var toUserName = message.ToUserName;
+
+	if(Array.isArray(content)) type = 'news';
+	console.info("xml-content==",content)
+	type = content.type || type;
+	info.content = content;
+	info.createTime = new Date().getTime();
+	info.msgType = type;
+	info.fromUserName = toUserName;
+	info.toUserName = fromUserName;
+
+	return template.compiled(info);
+}
