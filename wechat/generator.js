@@ -6,7 +6,7 @@
 
 var sha1 = require("sha1");
 var rawBody = require("raw-body");
-var Wechat = require("./wechat");
+var HanderAccessToken = require("./handerAccessToken");
 var xmlUtil = require("../util/xmlFormate");
 
 ///	处理微信服务器发来的消息
@@ -17,9 +17,8 @@ var xmlUtil = require("../util/xmlFormate");
 /// 		(2)将三个参数字符串拼接成一个字符串进行sha1加密
 /// 		(3)开发者获得加密后的字符串可与[signature]对比，标识该请求来源于微信
 module.exports = function(opts, hander) {
-  var wechat = new Wechat(opts); // 获取access_token保存至文件中
+  var handerAccessToken = new HanderAccessToken(opts); // 获取access_token保存至文件中
   return function*(next) {
-    var that = this;
     var token = opts.token;
     var signature = this.query.signature;
     var nonce = this.query.nonce;
@@ -55,7 +54,19 @@ module.exports = function(opts, hander) {
       // 通过weixin.js处理请求消息,生成回复消息体
       yield hander.call(this, next);
       // 回复消息
-      wechat.replay.call(this);
+      replay.call(this);
     }
   };
 };
+
+/// 给微信服务器发送消息
+function replay(){
+	var content = this.body;
+	var message = this.weixinRequest;
+
+	var xml = xmlUtil.tpl(content,message);
+
+	this.status = 200;
+	this.type = 'application/xml';
+	this.body = xml;
+}

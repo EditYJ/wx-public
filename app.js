@@ -7,11 +7,11 @@
 var Koa = require("koa");
 var wechat = require("./wechat/generator");
 var config = require('./config');
-var weixin = require('./weixin');
+var handerWeiXinReq = require('./service/handerWeiXinReq');
 
 var app = new Koa();
 
-app.use(wechat(config.wechat,weixin.reply));
+app.use(wechat(config.wechat,handerWeiXinReq.reply));
 
 app.listen(8987);
 

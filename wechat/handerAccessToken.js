@@ -21,7 +21,7 @@ var now = new Date().getTime();
 ///
 /// 因为[access_token]是共用的，基本上后续的所有请求都需要[access_token]
 /// 所以这里将[access_token]保存在了`@/config/wechat.text`路径中
-function Wechat(opts) {
+function handerAccessToken(opts) {
   var that = this;
   this.appID = opts.appID;
   this.appSecret = opts.appSecret;
@@ -56,7 +56,7 @@ function Wechat(opts) {
 /// 
 /// [access_token]和[expires_in](有效时间)都不为空的情况下，
 /// 判断[expires_in]是否超时，如果不超时则返回true
-Wechat.prototype.isvalidAccessToken = function(data) {
+handerAccessToken.prototype.isvalidAccessToken = function(data) {
   if (!data || !data.access_token || !data.expires_in) return false;
   let expires_in = data.expires_in;
   return now < expires_in ? true : false;
@@ -66,7 +66,7 @@ Wechat.prototype.isvalidAccessToken = function(data) {
 ///
 /// 将请求得到的[expires_in]时间提前了20s,防止网络延迟等特殊情况的出现
 /// 返回一个[Promise]对象，返回得到的[access_token]
-Wechat.prototype.updateAccessToken = function() {
+handerAccessToken.prototype.updateAccessToken = function() {
   let appID = this.appID;
   let appSecret = this.appSecret;
   let url = api.accessToken + "&appid=" + appID + "&secret=" + appSecret;
@@ -82,4 +82,4 @@ Wechat.prototype.updateAccessToken = function() {
 		});
   });
 };
-module.exports = Wechat
+module.exports = handerAccessToken
