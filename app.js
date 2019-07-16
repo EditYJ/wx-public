@@ -5,7 +5,7 @@
 "use strict";
 
 var Koa = require("koa");
-var wechat = require("./wechat/generator");
+var wechat = require("./middleware/generator");
 var config = require('./config');
 var handerWeiXinReq = require('./service/handerWeiXinReq');
 
