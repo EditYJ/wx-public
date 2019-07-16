@@ -18,7 +18,7 @@ var xmlUtil = require("../util/xmlFormate");
 /// 		(3)开发者获得加密后的字符串可与[signature]对比，标识该请求来源于微信
 module.exports = function(opts, hander) {
   var handerAccessToken = new HanderAccessToken(opts); // 获取access_token保存至文件中
-  handerAccessToken.requestAccessToken();
+  handerAccessToken.requestAccessToken()
   return function*(next) {
     var token = opts.token;
     var signature = this.query.signature;
@@ -66,7 +66,7 @@ function replay(){
 	var message = this.weixinRequest;
 
 	var xml = xmlUtil.tpl(content,message);
-
+  console.log("回复消息：", xml)
 	this.status = 200;
 	this.type = 'application/xml';
 	this.body = xml;

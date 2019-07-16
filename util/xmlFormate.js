@@ -7,7 +7,7 @@
 
 var xml2js = require('xml2js');
 var Promise = require('bluebird');
-var template = require('../views/template');
+var handleTemplate = require('../views/handleTemplate')
 
 exports.parseXMLAsync = function(xml){
 	return new Promise(function(resolve,reject){
@@ -55,6 +55,5 @@ exports.tpl = function(content,message){
 	info.msgType = type;
 	info.fromUserName = toUserName;
 	info.toUserName = fromUserName;
-
-	return template.compiled(info);
+	return handleTemplate.createEnv().render('repalyUserMsgTemplate.xml', info);
 }
